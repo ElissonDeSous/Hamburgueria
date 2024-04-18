@@ -28,7 +28,7 @@
      <section>
         <h2 class="text-2xl font-bold md: text-3xl  text-center mt-9 mb-6">Conheça nosso menu</h2>
 
-        <div class="">
+        <div id="menu">
             <main class="grid grid-cols-1 md:grid-cols-2 gap-7 mx-auto max-w-5xl px-2 mb-16 md:gap-10">
                 <div class="flex gap-2  ">
                   <img class="w-28 h-28 rounded-md hover:scale-110  hover:rotate-2 duration-300" src="./img//hamb-1.png" alt="primeria imagem hamburguer">
@@ -150,14 +150,14 @@
         </div>
      </section>
 
-     <div class="bg-black/50 w-full h-full fixed top-0 left-0 z-90  justify-center hidden items-center">
+     <div class="bg-black/50 w-full h-full fixed top-0 left-0 z-90  justify-center hidden items-center" id="carrinhoModal">
          <div class="bg-white min-w-[90% md:min-w-[600px]  p-5 rounded-md">
             <h2 class="text-center font-bold text-2xl mb-2">carrinho</h2>
             <div id="cart-items" class="flex justify-between mb-2 flex-col">
 
             </div>
 
-            <p class="font-bold">total : <span>0:00</span></p>
+            <p class="font-bold">total : <span id="cart-total">0:00</span></p>
             <p class="font-bold">Endereço de entrega : </p>
 
             <input class="w-full border-2 p-1 rounded my-1"  type="text" id="Endereço" placeholder="Digite seu Endereço">
@@ -173,12 +173,13 @@
 
      <footer class= "text-white font-bold w-full  bg-red-500 flex justify-center items-center  fixed bottom-0 z-40">
         <button class=" items-center gap-2" id="carrinhoBotao">
-            (<span id="cart-count"> 2 </span>)
+            (<span id="cart-count"> 0 </span>)
             veja meu carrinho
             <i class="fa fa-cart-plus text-lg text-white"></i>
         </button>
      </footer>
      
      
+     <script src="script.js"></script>
 </body>
 </html>
