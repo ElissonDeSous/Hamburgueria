@@ -1,9 +1,8 @@
 const Menu = document.getElementById("menu");
-const Horario = document.getElementById("horario")
 const Carrinho =  document.getElementById("carrinhoBotao");
 const Modal = document.getElementById("carrinhoModal");
 const cartItem = document.getElementById("cart-items");
-const Total = document.getElementById("cart-total");
+const CarrinhoTotal = document.getElementById("cart-total");
 const checkout = document.getElementById("checkout");
 const fecharModal = document.getElementById("close-modal");
 const CountCart = document.getElementById("cart-count");
@@ -72,21 +71,116 @@ let carrinho = []
 
        carrinho.forEach(item=>{
            const cartItemElement = document.createElement("div")
+           cartItemElement.classList.add("flex", "justify-between", "mb-4", "flex-col");
            cartItemElement.innerHTML = `
-            <div>
+            <div class="flex items-center justify-between">
                <div>
-                <p>${item.name}</p>
+                <p class="font-medium">${item.name}</p>
                 <p>${item.quantidade}</p>
-                <p>${item.preço}</p>
+                <p class="font-medium mb-2 ">${item.preço.toFixed(2)}</p>
                </div>
 
-               <div>
-               <button>Remover</button>
-               </div>
+        
+               <button class="remover" data-name = "${item.name}">Remover</button>
+              
             </div>
            `
+           total += item.preço * item.quantidade;
            cartItem.appendChild(cartItemElement)
        })
+
+       CarrinhoTotal.textContent = total.toLocaleString("pt-BR",{
+             style: "currency",
+             currency: "BRL"
+       })
+
+       CountCart.innerHTML = carrinho.length;
      }
+
+     // função para remover o item do carrinho
+
+     cartItem.addEventListener("click" , (event)=>{
+    if(event.target.classList.contains("remover"))
+    {
+        const name = event.target.getAttribute("data-name")
+        removeItemCart(name)
+    }
+     })
+
+     function removeItemCart(name){
+       const index = carrinho.findIndex(item => item.name === name);
+
+       if(index != -1){
+        const item = carrinho[index]
+        
+         if(item.quantidade > 1){
+             item.quantidade -=1
+             updateCartModal()
+             return;
+         }
+
+       carrinho.splice(index,1)
+       updateCartModal();0
+       }
+     }
+
+     Endereço.addEventListener('input',(event)=>{
+        let inputValue = event.target.inputValue
+        if(inputValue !== ""){
+            Endereço.classList.remove("border-red-500")
+             erro.classList.add("hidden")
+        }
+
+
+     })
+
+     checkout.addEventListener('click',()=>{
+       
+        const isOpen = horario();
+
+        if(!isOpen){
+            alert("RESTAURANTE ESTA FECHADO!!")
+            return;
+        }
+
+
+        if(carrinho.length === 0 )return;
+        if(Endereço.value === ""){
+            erro.classList.remove('hidden')
+            Endereço.classList.add("border-red-500")
+            return;
+        }
+
+  const carrinhoMapa = carrinho.map((item)=>{
+     return(
+        `${item.name} Quantidade: ${item.quantidade} Preço ${item.preço}|`
+     )
+  }).join("")
+
+const message = encodeURIComponent(carrinhoMapa);
+const Phone = "12996322883"
+
+window.open(`https://wa.me/${Phone}?text=${message} Endereço: ${Endereço.value}, "_blank"`)
+     })
+
+
+     function horario (){
+        const data = new Date();
+        const hora = data.getHours()
+        return hora >= 18 && hora < 22
+     }
+
+     const Hora = document.getElementById("horario")
+     const isOpen = horario();
+
+     if(isOpen){
+      Hora.classList.remove("bg-red-500");
+      Hora.classList.add("bg-green-600");
+     }else{
+        Hora.classList.remove("bg-green-600");
+        Hora.classList.add("bg-red-500")
+     }
+
+     
 
 
